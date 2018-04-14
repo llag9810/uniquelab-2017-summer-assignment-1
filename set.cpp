@@ -143,6 +143,7 @@ Set::Node *Set::fix_up(Node *node) {
     }
 
     if (node->right == nullptr) {
+        delete node;
         return nullptr;
     }
 
@@ -173,6 +174,7 @@ Set::Node *Set::move_red_left(Set::Node *node) {
 
 Set::Node *Set::delete_min(Set::Node *node) {
     if (node->left == nullptr) {
+        delete node;
         return nullptr;
     }
 
