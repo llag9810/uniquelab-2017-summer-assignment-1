@@ -13,7 +13,7 @@ protected:
 
     virtual void TearDown() {
         time_t end_time = time(NULL);
-        std::cout << "This test takes " << end_time-start_time << "times." << std::endl;
+        std::cout << "This test takes " << end_time - start_time << "times." << std::endl;
         ASSERT_TRUE(end_time - start_time <= 10) << "The test took too long.";
     }
 
@@ -99,6 +99,7 @@ TEST_F(setTest, repeated_data) {
         custom_set.insert((double) i);
         custom_set.insert((double) (i + 1));
         ASSERT_EQ(custom_set.count((double) i), std_set.count((double) i));
+        ASSERT_EQ(std_set.size(), custom_set.size());
     }
     ASSERT_EQ(std_set.size(), custom_set.size());
     for (auto s:std_set) {
@@ -111,18 +112,20 @@ TEST_F(setTest, crossing_data) {
     std::set<double> std_set;
     Set custom_set;
     for (int i = 1; i != 100000; ++i) {
-        auto num = (long long)rand()*100000;
-        num %=i;
+        auto num = (long long) rand() * 100000;
+        num %= i;
         std_set.insert((double) i);
         std_set.insert((double) (-i));
-        std_set.erase((double)(num));
+        std_set.erase((double) (num));
         custom_set.insert((double) i);
         custom_set.insert((double) (-i));
-        custom_set.erase((double)(num));
+        custom_set.erase((double) (num));
         ASSERT_EQ(custom_set.count((double) i), std_set.count((double) i));
         ASSERT_EQ(custom_set.count((double) (-i)), std_set.count((double) (-i)));
+        ASSERT_EQ(std_set.size(), custom_set.size());
     }
-    ASSERT_EQ(std_set.size(), custom_set.size());
+
+
     for (auto s:std_set) {
         custom_set.erase(s);
     }
@@ -162,10 +165,10 @@ TEST_F(setTest, random) {
     }
 }
 
-TEST_F(setTest,ordered_big){
+TEST_F(setTest, ordered_big) {
     Set custom_set;
-    for(unsigned i =0;i<1000000;i++){
-        custom_set.insert(((double)i));
+    for (unsigned i = 0; i < 1000000; i++) {
+        custom_set.insert(((double) i));
     }
-    ASSERT_EQ(custom_set.size(),1000000);
+    ASSERT_EQ(custom_set.size(), 1000000);
 }
